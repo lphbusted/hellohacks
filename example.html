@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Challenge: Bake a Cake!</title>
+  <style>
+    /* Basic styling for the game layout */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      text-align: center;
+    }
+    h1 {
+      color: #ff6f61;
+    }
+    .game-area {
+      margin: 20px auto;
+      width: 90%;
+    }
+    .instruction {
+      margin-bottom: 20px;
+    }
+    .block {
+      display: inline-block;
+      padding: 15px;
+      margin: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 8px;
+      cursor: grab;
+    }
+    .block:hover {
+      background-color: #45a049;
+    }
+    .drop-zone {
+      margin-top: 30px;
+      border: 3px dashed #ccc;
+      padding: 30px;
+      border-radius: 10px;
+      background-color: #fff;
+    }
+    .drop-zone p {
+      font-size: 18px;
+      color: #888;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e65b50;
+    }
+
+    /* Modal styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      text-align: left;
+      border-radius: 10px;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Styling for clickable step options */
+    .options {
+      display: none;
+      padding: 10px;
+      background-color: #f1f1f1;
+      border: 1px solid #ccc;
+      margin: 5px 0;
+    }
+
+    .option:hover {
+      background-color: #ddd;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-area">
+    <h1>Bake a Cake: Follow the Recipe!</h1>
+    
+    <!-- Button to show the recipe -->
+    <button id="showRecipeBtn">Show Recipe</button>
+
+    <!-- Modal (Popup) for displaying the recipe -->
+    <div id="recipeModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Recipe to Bake a Cake</h2>
+        <div id="recipeContent"></div>
+        <p>Now, close this window and arrange the steps in the correct order!</p>
+      </div>
+    </div>
+
+    <p class="instruction">Drag and drop the steps in the correct order to bake the cake.</p>
+    
+    <!-- Draggable steps -->
+    <div class="blocks">
+      <div class="block" draggable="true" id="step1" onclick="showOptions('ovenTempOptions')">Preheat the oven to <span id="ovenTemp">350°F</span></div>
+      <div class="options" id="ovenTempOptions">
+        <div class="option" onclick="selectOption('ovenTemp', '350°F')">350°F</div>
+        <div class="option" onclick="selectOption('ovenTemp', '375°F')">375°F</div>
+        <div class="option" onclick="selectOption('ovenTemp', '325°F')">325°F</div>
+      </div>
+
+      <div class="block" draggable="true" id="step2">Grease and flour the cake pans</div>
+      <div class="block" draggable="true" id="step3">Mix dry ingredients</div>
+      <div class="block" draggable="true" id="step4" onclick="showOptions('eggOptions')">Add <span id="eggCount">2 eggs</span></div>
+      <div class="options" id="eggOptions">
+        <div class="option" onclick="selectOption('eggCount', '2 eggs')">2 eggs</div>
+        <div class="option" onclick="selectOption('eggCount', '3 eggs')">3 eggs</div>
+        <div class="option" onclick="selectOption('eggCount', '1 egg')">1 egg</div>
+      </div>
+
+      <div class="block" draggable="true" id="step5">Combine wet and dry ingredients</div>
+      <div class="block" draggable="true" id="step6">Pour batter into pans</div>
+      <div class="block" draggable="true" id="step7">Bake for 30-35 minutes</div>
+    </div>
+
+    <!-- Drop zone for arranging the steps -->
+    <div class="drop-zone" id="dropZone">
+      <p>Drop the steps here in order.</p>
+    </div>
+
+    <!-- Button to check solution -->
+    <button onclick="checkSolution()">Check Solution</button>
+  </div>
+
+  <script>
+    // JavaScript for drag-and-drop functionality
+    const blocks = document.querySelectorAll('.block');
+    const dropZone = document.getElementById('dropZone');
+    let droppedBlocks = [];
+
+    // Add drag event listeners to each block
+    blocks.forEach(block => {
+      block.addEventListener('dragstart', dragStart);
+    });
+
+    dropZone.addEventListener('dragover', dragOver);
+    dropZone.addEventListener('drop', drop);
+
+    // Function for dragging the block
+    function dragStart(event) {
+      event.dataTransfer.setData('text', event.target.id);
+    }
+
+    // Allow dragover (required to drop)
+    function dragOver(event) {
+      event.preventDefault();
+    }
+
+    // Handle dropping the block
+    function drop(event) {
+      event.preventDefault();
+      const blockId = event.dataTransfer.getData('text');
+      const block = document.getElementById(blockId);
+      
+      // Append the block to the drop zone and store in droppedBlocks
+      dropZone.appendChild(block);
+      droppedBlocks.push(blockId);
+    }
+
+    // Check if the user arranged the steps correctly
+    function checkSolution() {
+      const correctOrder = ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7'];
+      
+      // Compare the dropped blocks with the correct order
+      if (JSON.stringify(droppedBlocks) === JSON.stringify(correctOrder)) {
+        alert('Great job! You baked the cake correctly!');
+      } else {
+        alert('Oops! That’s not the right order. Try again.');
+      }
+    }
+
+    // Modal functionality for showing and closing the recipe
+    const modal = document.getElementById("recipeModal");
+    const btn = document.getElementById("showRecipeBtn");
+    const span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal and generate a random recipe
+    btn.onclick = function() {
+      generateRandomRecipe();
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    // Show options for clickable steps
+    function showOptions(id) {
+      document.getElementById(id).style.display = 'block';
+    }
+
+    // Select an option and update the text in the step
+    function selectOption(stepId, value) {
+      document.getElementById(stepId).textContent = value;
+      document.getElementById(stepId + 'Options').style.display = 'none';
+    }
+
+    // Randomly generate a new recipe
+    function generateRandomRecipe() {
+      const ovenTemps = ['350°F', '375°F', '325°F'];
+      const eggCounts = ['2 eggs', '3 eggs', '1 egg'];
+
+      const randomTemp = ovenTemps[Math.floor(Math.random() * ovenTemps.length)];
+      const randomEggCount = eggCounts[Math.floor(Math.random() * eggCounts.length)];
+
+      document.getElementById('ovenTemp').textContent = randomTemp;
+      document.getElementById('eggCount').textContent = randomEggCount;
+
+      const recipeContent = `
+        <p>1. Preheat the oven to ${randomTemp}.</p>
+        <p>2. Grease and flour the cake pans.</p>
+        <p>3. Mix the dry ingredients (flour, sugar, baking powder).</p>
+        <p>4. Add ${randomEggCount}.</p>
+        <p>5. Combine wet and dry ingredients together.</p>
+        <p>6. Pour the batter into the prepared cake pans.</p>
+        <p>7. Bake for 30-35 minutes.</p>
+      `;
+      
+      document.getElementById('recipeContent').innerHTML = recipeContent;
+    }
+  </script>
+</body>
+</html>
