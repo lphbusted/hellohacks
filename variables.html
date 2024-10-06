@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variables Adventure</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff7043;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            font-size: 2em;
+            color: #ff7043;
+        }
+        .challenge-box {
+            background-color: #fff9c4;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .input-area {
+            margin-top: 15px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            font-size: 1em;
+            border: 2px solid #ff7043;
+            border-radius: 5px;
+        }
+        button {
+            margin-left: 15px;
+            background-color: #ff7043;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff8a65;
+        }
+        #result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        #result.correct {
+            color: green;
+        }
+        #result.incorrect {
+            color: red;
+        }
+        .progress {
+            background-color: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            background-color: #ff7043;
+            height: 100%;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        #score {
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 10px;
+        }
+        footer {
+            background-color: #ff7043;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Variables Adventure!</h1>
+    <p>Learn coding by exploring how variables work!</p>
+</header>
+
+<main>
+    <div class="container">
+        <h2>Level 1: Assign the Variable</h2>
+        <div class="challenge-box">
+            <p>To start your journey, you need to assign a value to a variable! The code below defines a variable called <code>playerName</code>, but it has no value. Can you give the variable a value?</p>
+            <pre><code>
+let playerName;
+            </code></pre>
+            <div class="input-area">
+                <label for="answer1">Assign a name to the variable <code>playerName</code>:</label>
+                <input type="text" id="answer1" placeholder="e.g., 'Alex'">
+                <button onclick="checkAnswer1()">Submit</button>
+            </div>
+            <p id="result1"></p>
+        </div>
+
+        <h2>Level 2: Update the Variable</h2>
+        <div class="challenge-box">
+            <p>Great! Now that the variable has a name, let's update it. Can you assign the number 100 to the variable <code>score</code>?</p>
+            <pre><code>
+let score = 0;
+score = ?
+            </code></pre>
+            <div class="input-area">
+                <label for="answer2">Assign a new value to the variable <code>score</code>:</label>
+                <input type="text" id="answer2" placeholder="e.g., 100">
+                <button onclick="checkAnswer2()">Submit</button>
+            </div>
+            <p id="result2"></p>
+        </div>
+
+        <h2>Level 3: Combine Variables</h2>
+        <div class="challenge-box">
+            <p>You're doing great! Let's take it a step further. Use both <code>playerName</code> and <code>score</code> to create a message. The goal is to display: "<code>playerName</code> has a score of <code>score</code>."</p>
+            <pre><code>
+let message = playerName + " has a score of " + score;
+            </code></pre>
+            <div class="input-area">
+                <label for="answer3">What is the message?</label>
+                <input type="text" id="answer3" placeholder="e.g., 'Alex has a score of 100'">
+                <button onclick="checkAnswer3()">Submit</button>
+            </div>
+            <p id="result3"></p>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <p id="score">Score: 0/3</p>
+    </div>
+</main>
+
+<script>
+    // Define variables for checking answers
+    let playerName = '';
+    let score = 0;
+    let gameScore = 0;
+
+    // Check answer for Level 1
+    function checkAnswer1() {
+        const answer = document.getElementById('answer1').value;
+        if (answer) {
+            playerName = answer;
+            document.getElementById('result1').textContent = `🎉 Great! You've assigned '${playerName}' to playerName!`;
+            document.getElementById('result1').classList.add("correct");
+            document.getElementById('result1').classList.remove("incorrect");
+            if (gameScore < 3) gameScore++;
+            updateProgress();
+        } else {
+            document.getElementById('result1').textContent = "❌ Please assign a valid name to the variable.";
+            document.getElementById('result1').classList.add("incorrect");
+            document.getElementById('result1').classList.remove("correct");
+        }
+    }
+
+    // Check answer for Level 2
+    function checkAnswer2() {
+        const answer = document.getElementById('answer2').value;
+        if (answer == 100) {
+            score = 100;
+            document.getElementById('result2').textContent = `🎉 Awesome! You've updated the score to ${score}!`;
+            document.getElementById('result2').classList.add("correct");
+            document.getElementById('result2').classList.remove("incorrect");
+            if (gameScore < 3) gameScore++;
+            updateProgress();
+        } else {
+            document.getElementById('result2').textContent = "❌ The score should be 100. Try again!";
+            document.getElementById('result2').classList.add("incorrect");
+            document.getElementById('result2').classList.remove("correct");
+        }
+    }
+
+    // Check answer for Level 3
+    function checkAnswer3() {
+        const answer = document.getElementById('answer3').value;
+        const expectedMessage = `${playerName} has a score of ${score}`;
+        if (answer === expectedMessage) {
+            document.getElementById('result3').textContent = `🎉 You're a coding master! The message is: "${expectedMessage}".`;
+            document.getElementById('result3').classList.add("correct");
+            document.getElementById('result3').classList.remove("incorrect");
+            if (gameScore < 3) gameScore++;
+            updateProgress();
+        } else {
+            document.getElementById('result3').textContent = `❌ Oops! The message should be: "${expectedMessage}". Try again!`;
+            document.getElementById('result3').classList.add("incorrect");
+            document.getElementById('result3').classList.remove("correct");
+        }
+    }
+
+    function updateProgress() {
+        const progressBar = document.getElementById('progress-bar');
+        progressBar.style.width = (gameScore / 3) * 100 + "%";
+        document.getElementById('score').textContent = `Score: ${gameScore}/3`;
+    }
+</script>
+
+</body>
+</html>

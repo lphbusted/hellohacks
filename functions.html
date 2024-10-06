@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Functions Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-size: 24px;
+            color: #333;
+        }
+        .challenge-box {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        pre {
+            text-align: left;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #66bb6a;
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        #result.correct {
+            color: green;
+        }
+        #result.incorrect {
+            color: red;
+        }
+        .progress {
+            background-color: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            background-color: #4caf50;
+            height: 100%;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        #score {
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 10px;
+        }
+        footer {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Learn Functions</h1>
+    <p>Can you predict what the program will return?</p>
+</header>
+
+<!-- Progress Bar -->
+<div class="container">
+
+    <!-- Challenge 1: Basic Function Call -->
+    <h2>Challenge 1: Basic Function Call</h2>
+    <div class="challenge-box">
+        <p>Read the code below and predict the output of calling the function:</p>
+        <pre><code>
+function greet() {
+    return "Hello!";
+}
+greet();
+        </code></pre>
+        <p><strong>Question:</strong> What will this function return?</p>
+        <input type="text" id="answer1" placeholder="Type the return value">
+        <button onclick="checkAnswer1()">Submit</button>
+        <p id="result1"></p>
+    </div>
+
+    <!-- Challenge 2: Return Values -->
+    <h2>Challenge 2: Return Values</h2>
+    <div class="challenge-box">
+        <p>This function returns the square of a number:</p>
+        <pre><code>
+function square(num) {
+    return num * num;
+}
+square(4);
+        </code></pre>
+        <p><strong>Question:</strong> What will this function return?</p>
+        <input type="text" id="answer2" placeholder="Type the return value">
+        <button onclick="checkAnswer2()">Submit</button>
+        <p id="result2"></p>
+    </div>
+
+    <!-- Challenge 3: Parameters and Arguments -->
+    <h2>Challenge 3: Parameters and Arguments</h2>
+    <div class="challenge-box">
+        <p>Here, the function adds two numbers and returns the result:</p>
+        <pre><code>
+function add(a, b) {
+    return a + b;
+}
+add(3, 5);
+        </code></pre>
+        <p><strong>Question:</strong> What will this function return?</p>
+        <input type="text" id="answer3" placeholder="Type the return value">
+        <button onclick="checkAnswer3()">Submit</button>
+        <p id="result3"></p>
+    </div>
+
+    <div class="progress">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <p id="score">Score: 0/3</p>
+</div>
+
+<script>
+    let score = 0;
+
+    // Check answer for Challenge 1: Basic Function Call
+    function checkAnswer1() {
+        const answer = document.getElementById('answer1').value.toLowerCase();
+        const correctAnswer = "hello!";
+
+        if (answer === correctAnswer) {
+            document.getElementById('result1').textContent = "🎉 Correct! The function returns 'Hello!'.";
+            document.getElementById('result1').classList.add("correct");
+            document.getElementById('result1').classList.remove("incorrect");
+            if (score < 3) score++;
+            updateProgress();
+        } else {
+            document.getElementById('result1').textContent = "❌ Incorrect! The function returns 'Hello!'.";
+            document.getElementById('result1').classList.add("incorrect");
+            document.getElementById('result1').classList.remove("correct");
+        }
+    }
+
+    // Check answer for Challenge 2: Return Values
+    function checkAnswer2() {
+        const answer = document.getElementById('answer2').value.toLowerCase();
+        const correctAnswer = "16";
+
+        if (answer === correctAnswer) {
+            document.getElementById('result2').textContent = "🎉 Correct! The square of 4 is 16.";
+            document.getElementById('result2').classList.add("correct");
+            document.getElementById('result2').classList.remove("incorrect");
+            if (score < 3) score++;
+            updateProgress();
+        } else {
+            document.getElementById('result2').textContent = "❌ Incorrect! The square of 4 is 16.";
+            document.getElementById('result2').classList.add("incorrect");
+            document.getElementById('result2').classList.remove("correct");
+        }
+    }
+
+    // Check answer for Challenge 3: Parameters and Arguments
+    function checkAnswer3() {
+        const answer = document.getElementById('answer3').value.toLowerCase();
+        const correctAnswer = "8";
+
+        if (answer === correctAnswer) {
+            document.getElementById('result3').textContent = "🎉 Correct! The sum of 3 and 5 is 8.";
+            document.getElementById('result3').classList.add("correct");
+            document.getElementById('result3').classList.remove("incorrect");
+            if (score < 3) score++;
+            updateProgress();
+        } else {
+            document.getElementById('result3').textContent = "❌ Incorrect! The sum of 3 and 5 is 8.";
+            document.getElementById('result3').classList.add("incorrect");
+            document.getElementById('result3').classList.remove("correct");
+        }
+    }
+
+    function updateProgress() {
+        const progressBar = document.getElementById('progress-bar');
+        progressBar.style.width = (score / 3) * 100 + "%";
+        document.getElementById('score').textContent = `Score: ${score}/3`;
+    }
+</script>
+
+</body>
+</html>

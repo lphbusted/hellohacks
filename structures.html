@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic If-Else Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-size: 24px;
+            color: #333;
+        }
+        .challenge-box {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        pre {
+            text-align: left;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #66bb6a;
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        #result.correct {
+            color: green;
+        }
+        #result.incorrect {
+            color: red;
+        }
+        .progress {
+            background-color: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            background-color: #4caf50;
+            height: 100%;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        #score {
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 10px;
+        }
+        footer {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Learn If-Else</h1>
+    <p>Can you predict what the program will print?</p>
+</header>
+
+<div class="container">
+    <h2>Challenge 1: Is the Number Even or Odd?</h2>
+    <div class="challenge-box">
+        <p>Read the code below. If the number is even, the program will print "Even". If it's odd, it will print "Odd".</p>
+        <pre><code>
+let num = 7;
+
+if (num % 2 === 0) {
+    console.log("Even");
+} else {
+    console.log("Odd");
+}
+        </code></pre>
+        <p><strong>Question:</strong> What will this program print?</p>
+        <input type="text" id="answer1" placeholder="Type 'Even' or 'Odd'">
+        <button onclick="checkAnswer1()">Submit</button>
+        <p id="result1"></p>
+    </div>
+
+    <h2>Challenge 2: Positive or Negative?</h2>
+    <div class="challenge-box">
+        <p>This code checks whether a number is positive or negative.</p>
+        <pre><code>
+let num = -5;
+
+if (num >= 0) {
+    console.log("Positive");
+} else {
+    console.log("Negative");
+}
+        </code></pre>
+        <p><strong>Question:</strong> What will this program print?</p>
+        <input type="text" id="answer2" placeholder="Type 'Positive' or 'Negative'">
+        <button onclick="checkAnswer2()">Submit</button>
+        <p id="result2"></p>
+    </div>
+
+    <h2>Challenge 3: Can You Vote?</h2>
+    <div class="challenge-box">
+        <p>Here, the program checks whether someone is old enough to vote (18 years or older).</p>
+        <pre><code>
+let age = 16;
+
+if (age >= 18) {
+    console.log("You can vote!");
+} else {
+    console.log("You cannot vote yet.");
+}
+        </code></pre>
+        <p><strong>Question:</strong> What will this program print?</p>
+        <input type="text" id="answer3" placeholder="Type the output">
+        <button onclick="checkAnswer3()">Submit</button>
+        <p id="result3"></p>
+    </div>
+
+    <div class="progress">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <p id="score">Score: 0/3</p>
+</div>
+
+<script>
+    let score = 0;
+
+    // Check answer for Challenge 1: Even or Odd
+    function checkAnswer1() {
+        const answer = document.getElementById('answer1').value.toLowerCase();
+        const correctAnswer = "odd";
+
+        if (answer === correctAnswer) {
+            document.getElementById('result1').textContent = "🎉 Correct! 7 is odd.";
+            document.getElementById('result1').classList.add("correct");
+            document.getElementById('result1').classList.remove("incorrect");
+            if (score < 3) score++;
+            updateProgress();
+        } else {
+            document.getElementById('result1').textContent = "❌ Incorrect! The number 7 is odd.";
+            document.getElementById('result1').classList.add("incorrect");
+            document.getElementById('result1').classList.remove("correct");
+        }
+    }
+
+    // Check answer for Challenge 2: Positive or Negative
+    function checkAnswer2() {
+        const answer = document.getElementById('answer2').value.toLowerCase();
+        const correctAnswer = "negative";
+
+        if (answer === correctAnswer) {
+            document.getElementById('result2').textContent = "🎉 Correct! -5 is negative.";
+            document.getElementById('result2').classList.add("correct");
+            document.getElementById('result2').classList.remove("incorrect");
+            if (score < 3) score++;
+            updateProgress();
+        } else {
+            document.getElementById('result2').textContent = "❌ Incorrect! The number -5 is negative.";
+            document.getElementById('result2').classList.add("incorrect");
+            document.getElementById('result2').classList.remove("correct");
+        }
+    }
+
+    // Check answer for Challenge 3: Can You Vote?
+    function checkAnswer3() {
+        const answer = document.getElementById('answer3').value.toLowerCase();
+        const correctAnswer = "you cannot vote yet.";
+
+        if (answer === correctAnswer) {
+            document.getElementById('result3').textContent = "🎉 Correct! 16 is not old enough to vote.";
+            document.getElementById('result3').classList.add("correct");
+            document.getElementById('result3').classList.remove("incorrect");
+            if (score < 3) score++;
+            updateProgress();
+        } else {
+            document.getElementById('result3').textContent = "❌ Incorrect! The output is: 'You cannot vote yet.'";
+            document.getElementById('result3').classList.add("incorrect");
+            document.getElementById('result3').classList.remove("correct");
+        }
+    }
+
+    function updateProgress() {
+        const progressBar = document.getElementById('progress-bar');
+        progressBar.style.width = (score / 3) * 100 + "%";
+        document.getElementById('score').textContent = `Score: ${score}/3`;
+    }
+</script>
+
+</body>
+</html>
