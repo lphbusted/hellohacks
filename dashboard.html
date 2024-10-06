@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Platform</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 80px;
+            background-color: #e1e1e1;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        .sidebar img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .sidebar a {
+            text-decoration: none;
+            font-size: 14px;
+            color: black;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .container {
+            margin-left: 100px;
+            padding: 20px;
+        }
+        header {
+            background-color: #a98c70;
+            color: white;
+            padding: 20px;
+            text-align: left;
+        }
+        .module {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .module img {
+            width: 50px;
+            height: 50px;
+        }
+        .module-text {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+        .module-text h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .module-text p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        button {
+            background-color: #70491d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #a98c70;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <img src="cookie-icon.png" alt="Cookie Icon">
+    <a href="#">Modules</a>
+    <a href="#">Rewards</a>
+    <a href="#">Profile</a>
+</div>
+
+<div class="container">
+    <header>
+        <h1>Print Hello World! (5 min)</h1>
+        <p>Learn the first steps to building a program.</p>
+        <button>Start</button>
+    </header>
+
+    <div class="module">
+        <img src="variables-icon.png" alt="Variables Icon">
+        <div class="module-text">
+            <h2>Variables</h2>
+            <p>Learn variables in 5 minutes!</p>
+        </div>
+        <button onclick="window.location.href='variables.html'">Start</button>
+    </div>
+
+    <div class="module">
+        <img src="structures-icon.png" alt="Control Structures Icon">
+        <div class="module-text">
+            <h2>Control Structures</h2>
+            <p>Get started on basic structures like for-loops!</p>
+        </div>
+        <button onclick="window.location.href='structures.html'">Start</button>
+    </div>
+
+    <div class="module">
+        <img src="functions-icon.png" alt="Functions Icon">
+        <div class="module-text">
+            <h2>Functions</h2>
+            <p>Master the use of functions in no time.</p>
+        </div>
+        <button onclick="window.location.href='functions.html'">Start</button>
+    </div>
+</div>
+
+</body>
+</html>
